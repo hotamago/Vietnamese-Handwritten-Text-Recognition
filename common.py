@@ -119,7 +119,7 @@ def decodeText(arr):
 # import padding library
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 def pad_listints(txt, max_label_len = 20):
-    return pad_sequences(txt, maxlen=max_label_len, padding='post', value = 0)
+    return pad_sequences(txt, maxlen=max_label_len, padding='post', value = -1)
 
 def pad_listint(txt, max_label_len = 20):
     return pad_listints([txt], max_label_len)[0]
