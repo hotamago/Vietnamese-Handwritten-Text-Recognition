@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import imutils
+import matplotlib.pyplot as plt
 
 def imgShow(image):
     plt.figure(figsize=(15,2))
@@ -14,13 +15,14 @@ def grayImage(image):
 def autoResize(image, size = (800, 100)):
     gray = grayImage(image)
     height, width = gray.shape
+    print(int(size[1]/height*width))
     gray = cv2.resize(gray,(int(size[1]/height*width), size[1]))
 
-    gray = np.pad(gray, ((0,0),(0, size[0]-width)), 'maximum')
+    gray = np.pad(gray, ((0,0),(0, size[0]-gray.shape[1])), 'maximum')
 
     return gray
 
-def test_orc_preprocess(image, default_fixed_size = (800, 100), default_filter_size = (10, 15), debug = False):
+def orcPreprocess(image, default_fixed_size = (800, 100), default_filter_size = (10, 15), debug = False):
     img = autoResize(image, default_fixed_size)
 
     if len(img.shape) > 2:
