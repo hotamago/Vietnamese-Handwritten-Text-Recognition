@@ -21,12 +21,12 @@ def autoResize(image, size = (800, 100)):
     return gray
 
 def test_orc_preprocess(image, default_fixed_size = (800, 100), default_filter_size = (10, 15), debug = False):
-    image = autoResize(image, default_fixed_size)
+    img = autoResize(image, default_fixed_size)
 
-    if len(image.shape) > 2:
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    if len(img.shape) > 2:
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     else:
-        gray = image
+        gray = img.copy()
 
     if debug:
         imgShow(gray)
@@ -81,7 +81,7 @@ def test_orc_preprocess(image, default_fixed_size = (800, 100), default_filter_s
 
     # allocate memory for the convex hull mask, draw the convex hull on
     # the image, and then enlarge it via a dilation
-    mask = np.zeros(image.shape[:2], dtype="uint8")
+    mask = np.zeros(img.shape[:2], dtype="uint8")
     cv2.drawContours(mask, [hull], -1, 255, -1)
     mask = cv2.dilate(mask, None, iterations=2)
     # take the bitwise of the opening image and the mask to reveal *just*
