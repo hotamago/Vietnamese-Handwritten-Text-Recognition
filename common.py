@@ -32,12 +32,15 @@ def orcPreprocess(image, default_fixed_size = (800, 100), default_filter_size = 
     if debug:
         imgShow(gray)
 
+    blur = cv2.GaussianBlur(gray,(5,5),0)
+    th1 = cv2.adaptiveThreshold(blur,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,11,2)
+
     # threshold the image using Otsu's thresholding method
-    thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
+    th2 = cv2.threshold(th1, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
 
     # apply a distance transform which calculates the distance to the
     # closest zero pixel for each pixel in the input image
-    dist = cv2.distanceTransform(thresh, cv2.DIST_L2, 5)
+    dist = cv2.distanceTransform(th2, cv2.DIST_L2, 5)
     
     # normalize the distance transform such that the distances lie in
     # the range [0, 1] and then convert the distance transform back to
@@ -111,7 +114,7 @@ def encodeText(txt):
 def decodeText(arr):
     pred = ""
     for p in arr:  
-        if int(p) != -1:
+        if int(p) >= 0:
             pred += CHAR_LIST[int(p)]
     return pred
 
