@@ -15,7 +15,6 @@ def grayImage(image):
 def autoResize(image, size = (800, 100)):
     gray = grayImage(image)
     height, width = gray.shape
-    print(int(size[1]/height*width))
     gray = cv2.resize(gray,(int(size[1]/height*width), size[1]))
 
     gray = np.pad(gray, ((0,0),(0, size[0]-gray.shape[1])), 'maximum')

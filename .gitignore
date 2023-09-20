@@ -1,6 +1,7 @@
 vietnamese_hcr/
 data/
 _demo/
+logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
